@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <meta name="theme-color" content="#04131f" />
+    <title>Sands of Atlantis</title>
+    <link rel="icon" href="icon-192.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Atlantis" />
+    <meta name="playtest-build" content="build-22 e72045f" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root { --bg: #04131f; --ink: #f4ead2; color-scheme: dark; }
+      html, body { margin: 0; height: 100%; background: var(--bg); overflow: hidden; touch-action: none; }
+      body { -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+      #game { position: fixed; inset: 0; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+      #rotate {
+        display: none; position: fixed; inset: 0; z-index: 10; background: var(--bg); color: var(--ink);
+        font: 600 22px/1.4 Fredoka, system-ui, sans-serif; text-align: center;
+        align-items: center; justify-content: center; padding: 0 16px; flex-direction: column; gap: 16px;
+      }
+      #rotate .phone { width: 48px; height: 80px; border: 4px solid var(--ink); border-radius: 10px; animation: turn 2s ease-in-out infinite; }
+      @keyframes turn { 0%, 30% { transform: rotate(0); } 60%, 100% { transform: rotate(-90deg); } }
+      @media (orientation: portrait) and (max-width: 900px) { #rotate { display: flex; } }
+    </style>
+    <script type="module" crossorigin src="./assets/index-DXxdj3c4.js"></script>
+  </head>
+  <body>
+    <div id="game"></div>
+    <div id="rotate"><div class="phone"></div><div>Turn your phone sideways to play</div></div>
+    <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});</script>
+  </body>
+</html>

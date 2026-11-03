@@ -1,0 +1,15 @@
+const CACHE = 'atlantis-c925407427', FILES = ["./","apple-touch-icon.png","assets/backdrop-Dx-aIUZT.jpg","assets/backdrop-evoJfxL-.jpg","assets/badge-deep-trouble-tvFuqcTY.png","assets/badge-shell-fall-Dmgqf83L.png","assets/bar-handle-VSksmBLu.png","assets/bar-tiF4qVXP.png","assets/barnacle-1-CkMqfKDa.png","assets/barnacle-2-Cgbh5uQ4.png","assets/board-gap-xknE0gXC.png","assets/bubble-BXoxkJ3Z.png","assets/cave-zqHohsJ6.png","assets/cell-BKkuvQNk.png","assets/clam-Iy71iE-7.png","assets/conch-BUj7lR29.png","assets/diver-CEq_n6yO.png","assets/door-Cb0tjWH1.png","assets/drain-BZlr4UXA.png","assets/gate-lP0w-N6a.png","assets/glow-burst-D_GPxZYs.png","assets/glow-current-vXzYlnZO.png","assets/glow-sparkle-CZSH6lot.png","assets/icon-hint-Duvl4B8F.png","assets/icon-pearl-BW6jG7yF.png","assets/icon-rewind-DT5OYYyv.png","assets/icon-swap-Bt8GEsU8.png","assets/icon-tentacle-FLdIg1BE.png","assets/index-DXxdj3c4.js","assets/key-CUY2-nJq.png","assets/lever-base-Dz8WoGvX.png","assets/lever-handle-BqF453IT.png","assets/oswin-DDL8jmpb.png","assets/padlock-BhHKR46W.png","assets/pearl-B7dIQtK0.png","assets/relic-BPD5znWF.png","assets/relic-statue-DGIDnha2.png","assets/relic-stone-iBzg4TN5.png","assets/rock-1-D309HPya.png","assets/rock-2-CKm_OAa6.png","assets/rock-3-BUZ5XGZb.png","assets/scallop-ByPMa07z.png","assets/shell-clam-1pQkaYRB.png","assets/shell-cowrie-CLvwEqV4.png","assets/shell-spiral-DqAaMAQC.png","assets/shell-starfish-Y7OKKh9R.png","assets/silt-1-Bwx6DbCJ.png","assets/silt-2-B2T-RZ3p.png","assets/special-pearl-BmJqGhks.png","assets/special-urchin-Ce7X28VZ.png","assets/star-off-CDSyIjDw.png","assets/star-on-DPfKkSAo.png","assets/sticker-level-complete-DXlD5agC.png","assets/sticker-level-start-C9Hj-HmP.png","assets/wall-_1X_ec2Y.png","assets/wall-weed-CuGENNqB.png","icon-192.png","icon-512.png","icon-maskable-512.png","index.html","manifest.webmanifest"];
+self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES)).then(() => self.skipWaiting())); });
+self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
+self.addEventListener('fetch', (e) => {
+  const req = e.request, url = new URL(req.url);
+  if (req.method !== 'GET') return;
+  // The page itself: the network first, so a new version shows up, and the cached copy when offline.
+  if (req.mode === 'navigate') { e.respondWith(fetch(req).catch(() => caches.match('./'))); return; }
+  // Fonts: kept once fetched, so the lettering survives offline.
+  if (/fonts\.(googleapis|gstatic)\.com$/.test(url.hostname)) {
+    e.respondWith(caches.open(CACHE).then((c) => c.match(req).then((hit) => hit || fetch(req).then((r) => { c.put(req, r.clone()); return r; }))));
+    return;
+  }
+  if (url.origin === location.origin) e.respondWith(caches.match(req).then((hit) => hit || fetch(req)));
+});
